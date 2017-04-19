@@ -1,8 +1,8 @@
 require 'faker'
 
 FactoryGirl.define do
-  factory :item do |f|
-   f.category { Faker::Name.category }
-   f.brand { Faker::Name.brand }
+  factory :item do
+    category
+    brand
   end
 end
