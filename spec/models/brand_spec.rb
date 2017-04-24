@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Brand, type: :model do
+describe Brand do
   describe "#provides category wise item count" do
     let!(:category) { create(:category) }
     let!(:brand) { create(:brand) }
