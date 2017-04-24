@@ -14,8 +14,8 @@ RSpec.describe Brand, type: :model do
     end
 
     context "when item not present" do
-      it "should not return anything" do
-        expect(anotherbrand.category_wise_items_count).to be_nil
+      it "should return blank string" do
+        expect(anotherbrand.category_wise_items_count).to be_empty
       end
     end
   end
