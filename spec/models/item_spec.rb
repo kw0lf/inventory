@@ -179,13 +179,14 @@ describe Item do
 
     context "when employee ID is changed" do
       it "should update item_history" do
-      item.update(employee: employee3)
+        item.update(employee: employee3)
       end
     end
 
     context "when working status is changed" do
       it "should update item_history" do
         item.update(working: false)
+
       end
     end
 

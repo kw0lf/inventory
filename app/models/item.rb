@@ -93,7 +93,7 @@ class Item < ActiveRecord::Base
   end
 
   def discard(reason)
-    update_attributes(system_id: nil, working: false, discarded_at: Time.now, employee_id: nil, discard_reason: reason)
+    update_attributes(working: false, discarded_at: Time.now, employee_id: nil, discard_reason: reason)
   end
 
   private
