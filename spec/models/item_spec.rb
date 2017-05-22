@@ -173,26 +173,28 @@ describe Item do
   describe "#update_item_history" do
     let!(:employee1) { create(:employee) }
     let!(:employee2) { create(:employee) }
-    let!(:item1)     { create(:item) }
+    let!(:item1)     { create(:item, employee: employee1, parent: item) }
     let!(:item)      { create(:item) }
-    let!(:employee3) { create(:employee) }
+    let!(:item2)     { create(:item) }
 
     context "when employee ID is changed" do
       it "should update item_history" do
-        item.update(employee: employee3)
+        item1.update(employee: employee2)
+        expect(item1.item_histories.size).to eq(2)
       end
     end
 
     context "when working status is changed" do
       it "should update item_history" do
-        item.update(working: false)
-
+        item1.update(working: false)
+        expect(item1.item_histories.size).to eq(2)
       end
     end
 
     context "when parent is changed" do
       it "should update item_history" do
-        item.update(parent: item1)
+        item.update(parent: item2)
+        expect(item.item_histories.size).to eq(2)
       end
     end
   end

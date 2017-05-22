@@ -7,7 +7,6 @@ describe Issue do
     let!(:another_item)  { create(:item, purchase_on: Date.today-1) }
     let!(:another_issue) { build(:issue, item: another_item, closed_at: Date.today) }
 
-
     context "when closed_at date is greater than purchase_on date" do
       it "should be bot be valid" do
         expect(issue).to be_invalid
