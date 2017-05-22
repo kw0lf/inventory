@@ -26,17 +26,17 @@ describe Checkout do
     context "when checkout date before purchase date" do
       let!(:item)     { create(:item, purchase_on: (Date.today)) }
       let!(:checkout) { build(:checkout, item: item, checkout: (Date.today-1)) }
-        it "should be invalid" do
-          expect(checkout).to be_invalid
-        end
+      it "should be invalid" do
+        expect(checkout).to be_invalid
       end
+    end
 
     context "when check_in not present" do
       let!(:anotheritem)     { create(:item, purchase_on: (Date.today-1)) }
       let!(:anothercheckout) { create(:checkout, item: anotheritem, checkout: (Date.today)) }
-        it "should be valid " do
-          expect(anothercheckout).to be_valid
-        end
+      it "should be valid " do
+        expect(anothercheckout).to be_valid
       end
-   end
+    end
+  end
 end

@@ -14,9 +14,9 @@ describe Issue do
     end
 
     context "when closed_at date is smaller than purchase_on date" do
-     it "should  be valid" do
-      expect(another_issue).to be_valid
-     end
+      it "should  be valid" do
+        expect(another_issue).to be_valid
+      end
     end
   end
 end
