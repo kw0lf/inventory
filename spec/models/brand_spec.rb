@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe Brand do
   describe "#provides category wise item count" do
-    let!(:category) { create(:category) }
-    let!(:brand) { create(:brand) }
+    let!(:category)     { create(:category) }
+    let!(:brand)        { create(:brand) }
     let!(:anotherbrand) { create(:brand) }
-    let!(:item) { create(:item, category: category, brand: brand) }
+    let!(:item)         { create(:item, category: category, brand: brand) }
 
     context "when item present" do
       it "should return one item for a category of brand " do
