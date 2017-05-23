@@ -21,6 +21,7 @@ describe Checkout do
   end
 
   describe "#checkout_limitation" do
+
     context "when checkout date before purchase date" do
       let!(:item)     { create(:item, purchase_on: (Date.today)) }
       let!(:checkout) { build(:checkout, item: item, checkout: (Date.today-1)) }

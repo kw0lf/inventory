@@ -8,7 +8,7 @@ describe Brand do
     let!(:item)         { create(:item, category: category, brand: brand) }
 
     context "when item present" do
-      it "should return one item for a category of brand " do
+      it "should return category name with one item" do
         expect(brand.category_wise_items_count).to eq("#{category.name}-1")
       end
     end

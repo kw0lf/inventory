@@ -144,9 +144,9 @@ describe Item do
 
   describe "#unavailable?" do
     let!(:item)             { create(:item) }
-    let!(:item1)            { create(:item) }
+    let!(:another_item)     { create(:item) }
     let!(:checkout)         { create(:checkout, item: item, check_in: Date.today, reason: "anything", checkout: Date.today) }
-    let!(:another_checkout) { create(:checkout, item: item1, check_in: nil, reason: "anything", checkout: Date.today) }
+    let!(:another_checkout) { create(:checkout, item: another_item, check_in: nil, reason: "anything", checkout: Date.today) }
 
     context "when checkin is present" do
       it "should return false" do
@@ -156,7 +156,7 @@ describe Item do
 
     context "when checkin is not present" do
       it "should return nil" do
-        expect(item1.unavailable?).to be true
+        expect(another_item.unavailable?).to be true
       end
     end
   end
@@ -174,28 +174,28 @@ describe Item do
   describe "#update_item_history" do
     let!(:employee)         { create(:employee) }
     let!(:another_employee) { create(:employee) }
-    let!(:item1)            { create(:item, employee: employee, parent: item) }
-    let!(:item)             { create(:item) }
-    let!(:item2)            { create(:item) }
+    let!(:item)             { create(:item, employee: employee, parent: another_item) }
+    let!(:another_item)     { create(:item) }
+    let!(:parent_item)            { create(:item) }
 
     context "when employee ID is changed" do
       it "should update item_history" do
-        item1.update(employee: another_employee)
-        expect(item1.item_histories.size).to eq(2)
+        item.update(employee: another_employee)
+        expect(item.item_histories.size).to eq(2)
       end
     end
 
     context "when working status is changed" do
       it "should update item_history" do
-        item1.update(working: false)
-        expect(item1.item_histories.size).to eq(2)
+        item.update(working: false)
+        expect(item.item_histories.size).to eq(2)
       end
     end
 
     context "when parent is changed" do
       it "should update item_history" do
-        item.update(parent: item2)
-        expect(item.item_histories.size).to eq(2)
+        another_item.update(parent: parent_item)
+        expect(another_item.item_histories.size).to eq(2)
       end
     end
   end
