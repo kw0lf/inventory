@@ -136,7 +136,7 @@ describe Item do
     let!(:another_employee) { create(:employee) }
 
     context "when employee is reallocated" do
-      it "should reallocate employee" do
+      it "should return true" do
         expect(item.reallocate(employee)).to be true
       end
     end
@@ -155,7 +155,7 @@ describe Item do
     end
 
     context "when checkin is not present" do
-      it "should return nil" do
+      it "should return true" do
         expect(another_item.unavailable?).to be true
       end
     end
@@ -165,7 +165,7 @@ describe Item do
     let!(:item) { create(:item) }
 
     context "when item is discarded" do
-      it "should update attributes" do
+      it "should return true" do
         expect(item.discard("system failure")).to be true
       end
     end
@@ -179,7 +179,7 @@ describe Item do
     let!(:parent_item)            { create(:item) }
 
     context "when employee ID is changed" do
-      it "should update item_history" do
+      it "should update_item_history" do
         item.update(employee: another_employee)
         expect(item.item_histories.size).to eq(2)
       end
