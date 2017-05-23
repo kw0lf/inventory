@@ -38,7 +38,7 @@ describe Item do
 
   describe ".filter_by_status" do
     let!(:employee)         { create(:employee) }
-    let!(:allocated_item)   {  create(:item, employee: employee) }
+    let!(:allocated_item)   { create(:item, employee: employee) }
     let!(:discarded_item)   { create(:item, discarded_at: Date.today) }
     let!(:unallocated_item) { create(:item) }
 
@@ -62,8 +62,8 @@ describe Item do
   end
 
   describe "#change_parent" do
-    let!(:item1)        { create(:item) }
     let!(:item)         { create(:item) }
+    let!(:item1)        { create(:item) }
     let!(:another_item) { create(:item, parent: item) }
 
     context "when parent is changed" do
@@ -76,11 +76,11 @@ describe Item do
   describe "#add_child" do
     let!(:item)         { create(:item) }
     let!(:another_item) { create(:item, parent: item) }
-    let!(:item3)        { create(:item) }
+    let!(:child_item)   { create(:item) }
 
     context "when child is added" do
       it "should change the child" do
-        expect(item.add_child(item3)).to be true
+        expect(item.add_child(child_item)).to be true
       end
     end
   end
@@ -145,8 +145,8 @@ describe Item do
   describe "#unavailable?" do
     let!(:item)             { create(:item) }
     let!(:item1)            { create(:item) }
-    let!(:checkout)         { create(:checkout, item: item, check_in: Date.today, reason: "anything",checkout: Date.today) }
-    let!(:another_checkout) { create(:checkout, item: item1, check_in: nil, reason: "anything",checkout: Date.today) }
+    let!(:checkout)         { create(:checkout, item: item, check_in: Date.today, reason: "anything", checkout: Date.today) }
+    let!(:another_checkout) { create(:checkout, item: item1, check_in: nil, reason: "anything", checkout: Date.today) }
 
     context "when checkin is present" do
       it "should return false" do
