@@ -30,7 +30,7 @@ describe Item do
     let!(:unassociated_item2) { create(:item) }
 
     context "when parent is present" do
-      it "should be return item's which have no parent" do
+      it "should return item's which have no parent" do
         expect(Item.unassociated_items(item)).to include(unassociated_item1, unassociated_item2)
       end
     end
@@ -105,9 +105,9 @@ describe Item do
   end
 
   describe "#name_with_id" do
-    let!(:brand)        { create(:brand, name: "HP") }
-    let!(:category)     { create(:category, name: "Monitor") }
-    let!(:item)         { create(:item, brand: brand, category: category) }
+    let!(:brand)    { create(:brand, name: "HP") }
+    let!(:category) { create(:category, name: "Monitor") }
+    let!(:item)     { create(:item, brand: brand, category: category) }
 
     context "when item is present" do
       it "should give the item name with ID" do
@@ -163,6 +163,7 @@ describe Item do
 
   describe "#discard" do
     let!(:item) { create(:item) }
+
     context "when item is discarded" do
       it "should update attributes" do
         expect(item.discard("system failure")).to be true

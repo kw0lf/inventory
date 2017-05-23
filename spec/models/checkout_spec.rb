@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe Checkout do
   describe "#checkin?" do
-    let!(:employee)        { create(:employee) }
-    let!(:item)            {  create(:item, employee: employee) }
-    let!(:checkout)        { create(:checkout, item: item) }
+    let!(:employee)         { create(:employee) }
+    let!(:item)             {  create(:item, employee: employee) }
+    let!(:checkout)         { create(:checkout, item: item) }
     let!(:another_checkout) {  create(:checkout, item: item, check_in: nil) }
 
     context "when check_in is present" do
