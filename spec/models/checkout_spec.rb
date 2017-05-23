@@ -22,7 +22,7 @@ describe Checkout do
 
   describe "#checkout_limitation" do
 
-    context "when checkout date before purchase date" do
+    context "when checkout date is before purchase date" do
       let!(:item)     { create(:item, purchase_on: (Date.today)) }
       let!(:checkout) { build(:checkout, item: item, checkout: (Date.today-1)) }
       it "should be invalid" do
@@ -30,7 +30,7 @@ describe Checkout do
       end
     end
 
-    context "when check_in not present" do
+    context "when checkout date is after purchase date" do
       let!(:another_item)     { create(:item, purchase_on: (Date.today-1)) }
       let!(:another_checkout) { create(:checkout, item: another_item, checkout: (Date.today)) }
       it "should be valid " do
