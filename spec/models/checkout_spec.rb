@@ -5,7 +5,7 @@ describe Checkout do
     let!(:employee)        { create(:employee) }
     let!(:item)            {  create(:item, employee: employee) }
     let!(:checkout)        { create(:checkout, item: item) }
-    let!(:anothercheckout) {  create(:checkout, item: item, check_in: nil) }
+    let!(:another_checkout) {  create(:checkout, item: item, check_in: nil) }
 
     context "when check_in is present" do
       it "should return true" do
@@ -15,13 +15,11 @@ describe Checkout do
 
     context "when check_in not present" do
       it "should return false" do
-        expect(anothercheckout.checkin?).to be false
+        expect(another_checkout.checkin?).to be false
       end
     end
   end
-end
 
-describe Checkout do
   describe "#checkout_limitation" do
     context "when checkout date before purchase date" do
       let!(:item)     { create(:item, purchase_on: (Date.today)) }
@@ -32,10 +30,10 @@ describe Checkout do
     end
 
     context "when check_in not present" do
-      let!(:anotheritem)     { create(:item, purchase_on: (Date.today-1)) }
-      let!(:anothercheckout) { create(:checkout, item: anotheritem, checkout: (Date.today)) }
+      let!(:another_item)     { create(:item, purchase_on: (Date.today-1)) }
+      let!(:another_checkout) { create(:checkout, item: another_item, checkout: (Date.today)) }
       it "should be valid " do
-        expect(anothercheckout).to be_valid
+        expect(another_checkout).to be_valid
       end
     end
   end

@@ -24,39 +24,39 @@ describe Item do
   end
 
   describe ".unassociated_items" do
-    let!(:item)  { create(:item) }
-    let!(:item1) { create(:item, parent: item) }
-    let!(:item2) { create(:item) }
-    let!(:item3) { create(:item) }
+    let!(:item)               { create(:item) }
+    let!(:child_item)         { create(:item, parent: item) }
+    let!(:unassociated_item1) { create(:item) }
+    let!(:unassociated_item2) { create(:item) }
 
     context "when parent is present" do
       it "should be return item's which have no parent" do
-        expect(Item.unassociated_items(item)).to include(item2, item3)
+        expect(Item.unassociated_items(item)).to include(unassociated_item1, unassociated_item2)
       end
     end
   end
 
   describe ".filter_by_status" do
-    let!(:employee) { create(:employee) }
-    let!(:item)     {  create(:item, employee: employee) }
-    let!(:item1)    { create(:item, discarded_at: Date.today) }
-    let!(:item2)    { create(:item) }
+    let!(:employee)         { create(:employee) }
+    let!(:allocated_item)   {  create(:item, employee: employee) }
+    let!(:discarded_item)   { create(:item, discarded_at: Date.today) }
+    let!(:unallocated_item) { create(:item) }
 
     context "when employee_id is nil" do
       it "should return unallocated item's" do
-        expect(Item.filter_by_status("Unallocated")).to eq([item1, item2])
+        expect(Item.filter_by_status("Unallocated")).to eq([discarded_item, unallocated_item])
       end
     end
 
     context "when discarded_at is not nil" do
       it "should return discarded item's" do
-        expect(Item.filter_by_status("Discarded")).to eq([item1])
+        expect(Item.filter_by_status("Discarded")).to eq([discarded_item])
       end
     end
 
     context "when employee_id is present" do
       it "should return allocated item's" do
-        expect(Item.filter_by_status("Allocated")).to eq([item])
+        expect(Item.filter_by_status("Allocated")).to eq([allocated_item])
       end
     end
   end
@@ -117,11 +117,11 @@ describe Item do
   end
 
   describe "#pending_checkout" do
-    let!(:item)      { create(:item) }
-    let!(:employee)  { create(:employee) }
-    let!(:employee1) { create(:employee) }
-    let!(:checkout)  { create(:checkout, employee: employee, check_in: nil, reason: "System failure", checkout: Date.today, item: item, created_at: Date.today) }
-    let!(:checkout1) { create(:checkout, employee: employee1, check_in: nil, reason: "any reason", checkout: Date.today, item: item, created_at: Date.today-1) }
+    let!(:item)             { create(:item) }
+    let!(:employee)         { create(:employee) }
+    let!(:another_employee) { create(:employee) }
+    let!(:checkout)         { create(:checkout, employee: employee, check_in: nil, reason: "System failure", checkout: Date.today, item: item, created_at: Date.today) }
+    let!(:another_checkout) { create(:checkout, employee: another_employee, check_in: nil, reason: "any reason", checkout: Date.today, item: item, created_at: Date.today-1) }
 
     context "when check_in is nil" do
       it "should return all checkout's whose check_in is nil" do
@@ -143,10 +143,10 @@ describe Item do
   end
 
   describe "#unavailable?" do
-    let!(:item)      { create(:item) }
-    let!(:item1)     { create(:item) }
-    let!(:checkout)  { create(:checkout, item: item, check_in: Date.today, reason: "anything",checkout: Date.today) }
-    let!(:checkout1) { create(:checkout, item: item1, check_in: nil, reason: "anything",checkout: Date.today) }
+    let!(:item)             { create(:item) }
+    let!(:item1)            { create(:item) }
+    let!(:checkout)         { create(:checkout, item: item, check_in: Date.today, reason: "anything",checkout: Date.today) }
+    let!(:another_checkout) { create(:checkout, item: item1, check_in: nil, reason: "anything",checkout: Date.today) }
 
     context "when checkin is present" do
       it "should return false" do
@@ -171,15 +171,15 @@ describe Item do
   end
 
   describe "#update_item_history" do
-    let!(:employee1) { create(:employee) }
-    let!(:employee2) { create(:employee) }
-    let!(:item1)     { create(:item, employee: employee1, parent: item) }
-    let!(:item)      { create(:item) }
-    let!(:item2)     { create(:item) }
+    let!(:employee)         { create(:employee) }
+    let!(:another_employee) { create(:employee) }
+    let!(:item1)            { create(:item, employee: employee, parent: item) }
+    let!(:item)             { create(:item) }
+    let!(:item2)            { create(:item) }
 
     context "when employee ID is changed" do
       it "should update item_history" do
-        item1.update(employee: employee2)
+        item1.update(employee: another_employee)
         expect(item1.item_histories.size).to eq(2)
       end
     end
